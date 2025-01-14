@@ -31,14 +31,14 @@ OPENAI_API_BASE=https://search.bytedance.net/gpt/openapi/online/v2/crawl
 OPENAI_API_VERSION=2024-03-01-preview
 ```
 
-I want to evaluate models that are not included in mixeval.models.__init__, see here for the simple steps of new model registration：
+I want to evaluate models that are not included in mix_eval.models.__init__, see here for the simple steps of new model registration：
 ```
-Step1: Add your model file to `mixeval/models/` with name `gpt-4o-2024-05-13.py` and write the model class in it with the name `Model_Class_Name`. 
-- Proprietary models are inherited from `mixeval.models.base_api.APIModelBase` (example file: `gpt_4_turbo_2024_04_09.py`, add your api key in `.env`). 
+Step1: Add your model file to `mix_eval/models/` with name `gpt-4o-2024-05-13.py` and write the model class in it with the name `Model_Class_Name`. 
+- Proprietary models are inherited from `mix_eval.models.base_api.APIModelBase` (example file: `gpt_4_turbo_2024_04_09.py`, add your api key in `.env`). 
 - In most cases, all you need to do is write a simple model class with a single `__init__` function. However, if your model needs more setup, e.g., it requires a different build_model() function, you should override the corresponding function or variable of the parent model.
 - The model file name should be the same with the name you pass to the `@register_model()` decorator on top of the model class.
 
-Step2: Add your model to `mixeval.models.__init__.AVAILABLE_MODELS`. 
+Step2: Add your model to `mix_eval.models.__init__.AVAILABLE_MODELS`. 
 - The entry you add should be in the form of `gpt-4o-2024-05-13: GPT_4o_0513`. See other models in `AVAILABLE_MODELS` as a reference.
 ```
 
@@ -86,4 +86,4 @@ python -m mix_eval.evaluate \
 
 Guidelines:
 - Configure the environment first.
-- Note that the file "gpt-4o-2024-05-13.py" needs to be added to "mixeval/models/", and "gpt-4o-2024-05-13: GPT_4o_0513" should be added to "mixeval.models.init.AVAILABLE_MODELS".
+- Note that the file "gpt-4o-2024-05-13.py" needs to be added to "mix_eval/models/", and "gpt-4o-2024-05-13: GPT_4o_0513" should be added to "mix_eval.models.init.AVAILABLE_MODELS".
