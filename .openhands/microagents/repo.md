@@ -33,16 +33,16 @@ OPENAI_API_VERSION=2024-03-01-preview
 
 I want to evaluate models that are not included in mix_eval.models.__init__, see here for the simple steps of new model registration：
 ```
-Step1: Add your model file to `mix_eval/models/` with name `gpt-4o-2024-05-13.py` and write the model class in it with the name `Model_Class_Name`. 
+Step1: Add your model file to `mix_eval/models/` with name `gpt_4o_2024_05_13.py` and write the model class in it with the name `Model_Class_Name`. 
 - Proprietary models are inherited from `mix_eval.models.base_api.APIModelBase` (example file: `gpt_4_turbo_2024_04_09.py`, add your api key in `.env`). 
 - In most cases, all you need to do is write a simple model class with a single `__init__` function. However, if your model needs more setup, e.g., it requires a different build_model() function, you should override the corresponding function or variable of the parent model.
 - The model file name should be the same with the name you pass to the `@register_model()` decorator on top of the model class.
 
 Step2: Add your model to `mix_eval.models.__init__.AVAILABLE_MODELS`. 
-- The entry you add should be in the form of `gpt-4o-2024-05-13: GPT_4o_0513`. See other models in `AVAILABLE_MODELS` as a reference.
+- The entry you add should be in the form of `gpt_4o_2024_05_13: GPT_4o_0513`. See other models in `AVAILABLE_MODELS` as a reference.
 ```
 
-The content in `gpt-4o-2024-05-13.py`may be as follows:
+The content in `gpt_4o_2024_05_13.py`may be as follows:
 
 ```
 import os
@@ -54,12 +54,12 @@ from httpx import Timeout
 from mix_eval.models.base_api import APIModelBase
 from mix_eval.api.registry import register_model
 
-@register_model("gpt-4o-2024-05-13")
+@register_model("gpt_4o_2024_05_13")
 class GPT_4o_0513(APIModelBase):
     def __init__(self, args):
         super().__init__(args)
         self.args = args
-        self.model_name = 'gpt-4o-2024-05-13'
+        self.model_name = 'gpt_4o_2024_05_13'
         
         load_dotenv()
         self.client = AzureOpenAI(
@@ -74,7 +74,7 @@ class GPT_4o_0513(APIModelBase):
 Run evaluation and get results. 
 ```
 python -m mix_eval.evaluate \
-    --model_name gpt-4o-2024-05-13 \
+    --model_name gpt_4o_2024_05_13 \
     --benchmark mixeval_hard \
     --version 2024-06-01 \
     --batch_size 20 \
@@ -86,4 +86,4 @@ python -m mix_eval.evaluate \
 
 Guidelines:
 - Configure the environment first.
-- Note that the file "gpt-4o-2024-05-13.py" needs to be added to "mix_eval/models/", and "gpt-4o-2024-05-13: GPT_4o_0513" should be added to "mix_eval.models.init.AVAILABLE_MODELS".
+- Note that the file "gpt_4o_2024_05_13.py" needs to be added to "mix_eval/models/", and "gpt_4o_2024_05_13: GPT_4o_0513" should be added to "mix_eval.models.init.AVAILABLE_MODELS".
